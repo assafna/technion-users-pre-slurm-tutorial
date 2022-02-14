@@ -6,6 +6,10 @@ Best practices for preparing your environment to run as a Slurm job. Procedure i
 
 We strongly recommend to work with a container as your neutral environment and mount your code from outside the container.
 
+A flowchart of the process:
+
+[![flowchart](flowchart.png)](flowchart.png)
+
 ## Pre-requirements
 
 Install [NVIDIA Enroot](https://github.com/NVIDIA/enroot/blob/master/doc/installation.md) in your workspace, if not yet installed.
