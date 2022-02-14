@@ -68,11 +68,7 @@ Our recommendation is to start developing based on an optimized container from [
 
     More configurations are available in Enroot's [start](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/start.md) command documentations.
 
-    To exit the container run:
-
-    ```bash
-    exit
-    ```
+    To exit the container run `exit`.
 
 ### Case B - Existing Docker container
 
@@ -155,7 +151,7 @@ Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submi
 
     ```bash
     #!/bin/bash
-    #SBATCH --job-name horovod_<pt|tf>
+    #SBATCH --job-name horovod_tf
     #SBATCH --nodes 2
     #SBATCH --gres gpu:8
     #SBATCH --ntasks-per-node 8
@@ -181,12 +177,12 @@ Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submi
 
 4. __Optional:__ attach to the submitted job.
 
-    List the current running jobs with `squeue`, then run `squeue -j <job_id> -s` to view the job steps, and finally run:
+    List the current running jobs with `squeue`, run `squeue -j <job_id> -s` to view the job steps, and finally run:
 
     ```bash
     sattach <job_id>.<job_step>
     ```
 
-    __Note:__ the `<job_step>` should be the `bash` step in this case, which is usually `0`.
+    __Note:__ the `<job_step>` should be the `bash` step (in this case), which is usually `0`.
 
     Detach from the submitted job by pressing `Ctrl+Z`.
