@@ -59,7 +59,7 @@ Our recommendation is to start developing based on an optimized container from [
 3. Start and work on the container.
 
     ```bash
-    sudo enroot --root --rw --mount <local_folder>:<container_folder> <environment_name>
+    sudo enroot start --root --rw --mount <local_folder>:<container_folder> <environment_name>
     ```
 
     - `--root` enables root privileges.
