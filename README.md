@@ -137,7 +137,11 @@ Slurm uses squash files to run jobs. Therefore, your environment should be expor
 
 Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submit a job from the "login" node use `sbatch` and prepare a designated script.
 
-### Horovod's multi-node example
+### Case A - MPI
+
+Relevant for executing multi-GPU / multi-node runs using MPI. We'll use Horovod's example for that.
+
+__Note:__ also relevant for single-GPU runs, but MPI is redundant.
 
 1. Clone Horovod's repository.
 
@@ -152,10 +156,11 @@ Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submi
     ```bash
     #!/bin/bash
     #SBATCH --job-name horovod_tf
-    #SBATCH --nodes 2
-    #SBATCH --gres gpu:8
-    #SBATCH --ntasks-per-node 8
+    #SBATCH --output %x-%j.out
+    #SBATCH --error %x-%j.err
+    #SBATCH --ntasks 1
     #SBATCH --cpus-per-task 32
+    #SBATCH --gpus-per-task 16
 
     srun --container-image $1 \
     --container-mounts $2:/code \
@@ -165,7 +170,10 @@ Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submi
     --batch-size 256"
     ```
 
-    __Note:__ this script is intended to run on two nodes with 8 GPUs each, modify it if needed.
+    - `%x` - Job name.
+    - `%j` - Job ID.
+
+    __Note:__ this script is intended to run on 16 GPUs, modify it if needed. Notice how only a single task (`--ntasks 1`) is needed for running with MPI.
 
 3. Submit a new Slurm job.
 
@@ -173,16 +181,18 @@ Slurm jobs can be submitted either via a `srun` or a `sbatch` commands. To submi
     sbatch <script_file> <squash_file> <horovods_git_folder>
     ```
 
-    __Note:__ add `-w <node_name_#1>,<node_name_#2>` to choose specific nodes.
+    Two files will be locally created, one for the output and one for the errors.
 
-4. __Optional:__ attach to the submitted job.
+### Case B - OpenMP
 
-    List the current running jobs with `squeue`, run `squeue -j <job_id> -s` to view the job steps, and finally run:
+Relevant for executing single-GPU / multi-GPU runs in a single / multi-threaded manner with the framework's native support.
 
-    ```bash
-    sattach <job_id>.<job_step>
-    ```
+Create a Slurm script identical to [Case A](#case-a---mpi), and change the following lines:
 
-    __Note:__ the `<job_step>` should be the `bash` step (in this case), which is usually `0`.
+```bash
+#SBATCH --ntasks <number of GPUs>
+#SBATCH --cpus-per-task 32
+#SBATCH --gpus-per-task 1
+```
 
-    Detach from the submitted job by pressing `Ctrl+Z`.
+This will create a separate task per GPU.
