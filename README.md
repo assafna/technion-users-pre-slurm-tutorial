@@ -27,13 +27,13 @@ Our recommendation is to start developing based on an optimized container from [
     Pull command:
 
     ```bash
-    sudo enroot import 'docker://nvcr.io#nvidia/<framework>:<tag>'
+    enroot import 'docker://nvcr.io#nvidia/<framework>:<tag>'
     ```
 
     E.g., to pull a 22.01 release TensorFlow container run:
 
     ```bash
-    sudo enroot import 'docker://nvcr.io#nvidia/tensorflow:22.01-tf1-py3'
+    enroot import 'docker://nvcr.io#nvidia/tensorflow:22.01-tf1-py3'
     ```
 
     A container will be pulled and converted to a local [squash](https://en.wikipedia.org/wiki/SquashFS) file.
@@ -41,25 +41,25 @@ Our recommendation is to start developing based on an optimized container from [
 2. Export the container to Enroot's data path.
 
     ```bash
-    sudo enroot create --name <environment_name> <squash_file>
+    enroot create --name <environment_name> <squash_file>
     ```
 
     E.g., to export the TensorFlow container run:
 
     ```bash
-    sudo enroot create --name nvidia_tf nvidia+tensorflow+22.01-tf1-py3.sqsh
+    enroot create --name nvidia_tf nvidia+tensorflow+22.01-tf1-py3.sqsh
     ```
 
     To view all exported containers run:
 
     ```bash
-    sudo enroot list
+    enroot list
     ```
 
 3. Start and work on the container.
 
     ```bash
-    sudo enroot start --root --rw --mount <local_folder>:<container_folder> <environment_name>
+    enroot start --root --rw --mount <local_folder>:<container_folder> <environment_name>
     ```
 
     - `--root` enables root privileges.
@@ -72,10 +72,10 @@ Our recommendation is to start developing based on an optimized container from [
 
 ### Case B - Existing Docker container
 
-To convert an existing container from Docker registry, as explained [here](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/import.md), run:
+To convert an existing (local) container from Docker registry, as explained [here](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/import.md), run:
 
 ```bash
-sudo docker import 'dockerd://<image>:<tag>'
+docker import 'dockerd://<image>:<tag>'
 ```
 
 The container will be converted to a local squash file. Continue from [Case A2](#case-a---fresh-start).
@@ -118,7 +118,7 @@ Slurm uses squash files to run jobs. Therefore, your environment should be expor
 1. Export your current environment to a squash file.
 
     ```bash
-    sudo enroot export --output <squash_file> <environment_name>
+    enroot export --output <squash_file> <environment_name>
     ```
 
     A new squash file will be locally created.
@@ -130,7 +130,7 @@ Slurm uses squash files to run jobs. Therefore, your environment should be expor
     The original, unmodified squash file can be deleted. Additionally, to delete the exported container under Enroot's data path run:
 
     ```bash
-    sudo enroot remove <environment_name>
+    enroot remove <environment_name>
     ```
 
 ## Episode 3 - Submitting a Slurm job
