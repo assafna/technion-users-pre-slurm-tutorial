@@ -173,7 +173,7 @@ __Note:__ also relevant for single-GPU runs, but MPI is redundant.
     - `%x` - Job name.
     - `%j` - Job ID.
 
-    __Note:__ this script is intended to run on 16 GPUs, modify it if needed. Notice how only a single task (`--ntasks 1`) is needed for running with MPI.
+    __Note:__ this script is intended to run on 16 GPUs (E.g., 2 nodes with 8 GPUs each), modify it if needed. Notice how only a single task (`--ntasks 1`) is needed for running with MPI.
 
 3. Submit a new Slurm job.
 
@@ -191,7 +191,7 @@ Create a Slurm script identical to [Case A](#case-a---mpi), and change the follo
 
 ```bash
 #SBATCH --ntasks <number of GPUs>
-#SBATCH --cpus-per-task 32
+#SBATCH --cpus-per-task 8
 #SBATCH --gpus-per-task 1
 ```
 
