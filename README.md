@@ -10,15 +10,9 @@ A flowchart of the process:
 
 [![flowchart](flowchart.png)](flowchart.png)
 
-## Pre-requirements
-
-Install [NVIDIA Enroot](https://github.com/NVIDIA/enroot/blob/master/doc/installation.md) in your workspace, if not yet installed.
-
 ## Episode 1 - Development
 
 Our recommendation is to start developing based on an optimized container from [NGC](https://catalog.ngc.nvidia.com/). Chances are the required packages are installed and no modification is needed. If this is not the case, you can modify the container to fit your requirements.
-
-### Case A - Fresh start
 
 1. Pull a relevant container from NGC using NVIDIA Enroot.
 
@@ -69,47 +63,6 @@ Our recommendation is to start developing based on an optimized container from [
     More configurations are available in Enroot's [start](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/start.md) command documentations.
 
     To exit the container run `exit`.
-
-### Case B - Existing Docker container
-
-To convert an existing (local) container from Docker registry, as explained [here](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/import.md), run:
-
-```bash
-docker import 'dockerd://<image>:<tag>'
-```
-
-The container will be converted to a local squash file. Continue from [Case A2](#case-a---fresh-start).
-
-### Case C - Existing non-containerized environment
-
-1. Identify your current framework version.
-
-    ```bash
-    <pip|conda> list | grep <framework>
-    ```
-
-    E.g., to identify which TensorFlow version you are using on pip environment, run:
-
-    ```bash
-    pip list | grep torch
-    ```
-
-2. Pull the relevant framework container from NGC.
-
-    Follow [Case A](#case-a---fresh-start) steps.
-
-3. Modify the container with the relevant packages.
-
-    We recommend to upgrade, install and change only necessary packages. Therefore, the best practice is to first try and run your code on the original container and to install packages as needed.
-
-    One way to mimic your environment is to export all packages to a file and use this file to install them inside the container.
-
-    - For pip environment run `pip freeze > requirements.txt`.
-    - For conda environment run `conda env export > environment.yml`, as suggested [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#sharing-an-environment).
-
-    __Note:__ remove all lines containing the relevant framework (E.g., TensorFlow). It is recommended not to override the container default framework.
-
-    Then, start your container, mount this file, and install the relevant packages.
 
 ## Episode 2 - Exporting your environment to a squash file
 
