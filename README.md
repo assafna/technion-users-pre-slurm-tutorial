@@ -119,7 +119,7 @@ __Note:__ also relevant for single-GPU runs, but MPI is redundant.
     --container-mounts $2:/code \
     --no-container-entrypoint \
     /bin/bash -c \
-    "python /code/horovod/examples/tensorflow/tensorflow_synthetic_benchmark.py \
+    "python /code/examples/tensorflow/tensorflow_synthetic_benchmark.py \
     --batch-size 256"
     ```
 
