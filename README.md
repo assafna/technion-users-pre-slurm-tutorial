@@ -24,10 +24,10 @@ Our recommendation is to start developing based on an optimized container from [
     enroot import 'docker://nvcr.io#nvidia/<framework>:<tag>'
     ```
 
-    E.g., to pull a 22.01 release TensorFlow container run:
+    E.g., to pull a 22.03 release TensorFlow container run:
 
     ```bash
-    enroot import 'docker://nvcr.io#nvidia/tensorflow:22.01-tf1-py3'
+    enroot import 'docker://nvcr.io#nvidia/tensorflow:22.03-tf1-py3'
     ```
 
     A container will be pulled and converted to a local [squash](https://en.wikipedia.org/wiki/SquashFS) file.
@@ -41,7 +41,7 @@ Our recommendation is to start developing based on an optimized container from [
     E.g., to export the TensorFlow container run:
 
     ```bash
-    enroot create --name nvidia_tf nvidia+tensorflow+22.01-tf1-py3.sqsh
+    enroot create --name nvidia_tf nvidia+tensorflow+22.03-tf1-py3.sqsh
     ```
 
     To view all exported containers run:
